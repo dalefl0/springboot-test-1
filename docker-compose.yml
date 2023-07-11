@@ -1,5 +1,15 @@
-version: '3'
+version: "3"
 services:
+  app:
+    build:
+      context: .
+    env_file: .env
+    volumes:
+      - ./src:/usr/src/app/src
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
   db:
     image: postgres:14
     restart: always
@@ -11,5 +21,6 @@ services:
       - postgres-data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+
 volumes:
   postgres-data:
