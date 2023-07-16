@@ -17,7 +17,7 @@ RUN chmod +x ./gradlew
 COPY . .
 
 # Use Gradle to build the application
-RUN ./gradlew build
+RUN sh ./gradlew build
 
 # Set up a second stage, which will only keep the compiled application and not the build tools and source code
 FROM openjdk:17-jdk-slim
