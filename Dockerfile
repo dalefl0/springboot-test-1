@@ -26,7 +26,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the application JAR file from the build stage
-COPY --from=build /app/build/libs/surl-0.0.1-SNAPSHOT.jar .
+COPY --from=build /app/build/libs/demo-0.0.1-SNAPSHOT.jar .
 
 # Set the command to run the Spring Boot application
-CMD ["java", "-jar", "surl-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "demo-0.0.1-SNAPSHOT.jar"]
