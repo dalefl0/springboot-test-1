@@ -1,27 +1,8 @@
-version: '3'
-
+version: '3.8'
 services:
-  app:
-    build: .
+  your-app-name:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - 8080:8080
-    depends_on:
-      - db
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5433/my-startup-db
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin
-  db:
-    image: postgres:14
-    restart: always
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: my-startup-db
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    ports:
-      - 5433:5432
-
-volumes:
-  postgres-data:
+      - "8080:8080"

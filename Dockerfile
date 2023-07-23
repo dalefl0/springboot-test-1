@@ -1,32 +1,32 @@
-# Use a base image with JDK installed
+# Start with a base image containing Java runtime (AdoptOpenJDK)
 FROM openjdk:17-jdk-slim AS build
 
-# Set the working directory in the container
+# Set the working directory in the image to "/app"
 WORKDIR /app
 
-# Copy the Gradle build files
-COPY build.gradle .
-COPY settings.gradle .
-COPY gradlew .
+# Copy the Gradle executable to the image
+COPY gradlew ./
+
+# Copy the 'gradle' folder to the image
 COPY gradle ./gradle
 
-# Download Gradle dependencies
-RUN ./gradlew --no-daemon dependencies
+# Give permission to execute the gradle script
+RUN chmod +x ./gradlew
 
-# Copy the application source code
-COPY src ./src
+# Copy the rest of the application source code
+COPY . .
 
-# Build the application
-RUN ./gradlew --no-daemon build
+# Use Gradle to build the application
+RUN sh ./gradlew build
 
-# Use a minimal base image for the final image
+# Set up a second stage, which will only keep the compiled application and not the build tools and source code
 FROM openjdk:17-jdk-slim
 
-# Set the working directory in the container
+# Set the working directory to '/app'
 WORKDIR /app
 
-# Copy the application JAR file from the build stage
-COPY --from=build /app/build/libs/demo-0.0.1-SNAPSHOT.jar .
+# Copy the jar file from the first stage
+COPY --from=build /app/build/libs/*.jar app.jar
 
-# Set the command to run the Spring Boot application
-CMD ["java", "-jar", "demo-0.0.1-SNAPSHOT.jar"]
+# Set the startup command to execute the jar
+CMD ["java", "-jar", "/app/app.jar"]
