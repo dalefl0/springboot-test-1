@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
-    username: ${PGUSER}
-    password: ${PGPASSWORD}
+    url: jdbc:postgresql://${PGHOST:ep-orange-wind-884154.ap-southeast-1.aws.neon.tech}:${PGPORT:5432}/${PGDATABASE:postgres}
+    username: ${PGUSER:fl0user}
+    password: ${PGPASSWORD:S6WndIcNJi7B}
   jpa:
     hibernate:
       ddl-auto: update
