@@ -16,16 +16,8 @@ RUN chmod +x ./gradlew
 # Copy the rest of the application source code
 COPY . .
 
-# Accept build-time arguments for environment variables
-ARG PGHOST
-ARG PGPORT
-ARG PGDATABASE
-ARG PGUSER
-ARG PGPASSWORD
-
 # Use Gradle to build the application
-# Pass the environment variables to the build process
-RUN PGHOST=${PGHOST} PGPORT=${PGPORT} PGDATABASE=${PGDATABASE} PGUSER=${PGUSER} PGPASSWORD=${PGPASSWORD} sh ./gradlew build
+RUN sh ./gradlew build
 
 # Set up a second stage, which will only keep the compiled application and not the build tools and source code
 FROM openjdk:17-jdk-slim
